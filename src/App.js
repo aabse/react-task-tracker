@@ -1,8 +1,9 @@
+import { useState } from "react";
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 
 function App() {
-  const tasks = [
+  const [tasks, setTasks] = useState([
     {
       id: 1,
       text: "Doctors Appointment",
@@ -15,13 +16,21 @@ function App() {
       day: "Feb 6th at 2:30pm",
       reminder: true
     }
-  ];
+  ]);
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
 
   return (
     <div className="container">
       <h1>
         <Header />
-        <Tasks tasks={tasks} />
+        {tasks.length > 0 ? (
+          <Tasks tasks={tasks} onDelete={deleteTask} />
+        ) : (
+          "No tasks to show"
+        )}
       </h1>
     </div>
   );
